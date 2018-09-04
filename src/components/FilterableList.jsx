@@ -4,22 +4,14 @@ import List from './List';
 import SearchBar from './SearchBar';
 
 class FilterableList extends React.Component {
-  state = {
-    searchTerm: ''
-  };
-
-  handleSearchTermChange = searchTerm => {
-    this.setState({ searchTerm });
-  }
-
   render () {
-    const filteredList = this.props.list.filter(listItem => listItem.name.toLowerCase().includes(this.state.searchTerm.toLowerCase()));
+    const filteredList = this.props.list.filter(listItem => listItem.name.toLowerCase().includes(this.props.searchTerm.toLowerCase()));
 
     return (
       <React.Fragment>
         <SearchBar
-          searchTerm={ this.state.searchTerm }
-          onSearchTermChange={ this.handleSearchTermChange }
+          searchTerm={ this.props.searchTerm }
+          onSearchTermChange={ this.props.onSearchTermChange }
         />
         <p>
           { filteredList.length } / { this.props.list.length }
@@ -30,5 +22,9 @@ class FilterableList extends React.Component {
 
   }
 }
+
+FilterableList.defaultProps = {
+  searchTerm: ''
+};
 
 export default FilterableList;

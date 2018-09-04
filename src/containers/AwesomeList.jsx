@@ -4,7 +4,8 @@ import FilterableList from '../components/FilterableList';
 
 class AwesomeList extends React.Component {
   state = {
-    data: []
+    data: [],
+    searchTerm: ''
   };
 
   componentDidMount () {
@@ -15,8 +16,18 @@ class AwesomeList extends React.Component {
       })
   }
 
+  handleSearchTermChange = searchTerm => {
+    this.setState({ searchTerm });
+  }
+
   render () {
-    return <FilterableList list={ this.state.data } />;
+    return (
+      <FilterableList
+        list={ this.state.data }
+        searchTerm={ this.state.searchTerm }
+        onSearchTermChange={ this.handleSearchTermChange }
+      />
+    );
   }
 }
 
