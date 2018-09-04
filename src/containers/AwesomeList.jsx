@@ -1,11 +1,14 @@
 import React from 'react';
 
+import { connect } from '../react-redux';
+
 import FilterableList from '../components/FilterableList';
+
+import { changeSearchTerm } from '../actions';
 
 class AwesomeList extends React.Component {
   state = {
-    data: [],
-    searchTerm: ''
+    data: []
   };
 
   componentDidMount () {
@@ -17,18 +20,28 @@ class AwesomeList extends React.Component {
   }
 
   handleSearchTermChange = searchTerm => {
-    this.setState({ searchTerm });
+    this.props.changeSearchTerm(searchTerm);
   }
 
   render () {
     return (
       <FilterableList
         list={ this.state.data }
-        searchTerm={ this.state.searchTerm }
+        searchTerm={ this.props.searchTerm }
         onSearchTermChange={ this.handleSearchTermChange }
       />
     );
   }
 }
 
-export default AwesomeList;
+const mapStateToProps = state => {
+  return {
+    searchTerm: state.searchTerm
+  };
+};
+
+const actions = {
+  changeSearchTerm
+};
+
+export default connect(mapStateToProps, actions)(AwesomeList);
